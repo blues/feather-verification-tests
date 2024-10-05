@@ -7,6 +7,10 @@ supplied to the Feather.
 Setup
 -----
 
+### IDE
+
+Compile and flash using the Arduino IDE v2.x
+
 ### STLINK
 
 - Connect the STLINK to the STDC14 connector (a.k.a. JTAG) on the Feather. This

@@ -9,6 +9,10 @@ This test is intended to validate the following peripherals:
 Setup
 -----
 
+### IDE
+
+Compile and flash using the Arduino IDE v2.x
+
 ### I2C
 
 Connect a Qwiic cable from the Feather to an Adafruit BME280. Open a serial
@@ -29,6 +33,18 @@ Place the jumper wires according to the following table:
 |  `MI`   |      `SDO`      |
 |  `D10`  |      `CS`       |
 
+Comment out the line:
+
+```c++
+Adafruit_BME280 bme; // I2C
+```
+
+Uncomment the following line:
+
+```c++
+// Adafruit_BME280 bme(BME_CS); // hardware SPI
+```
+
 Open a serial monitoring application, such as CoolTerm, GTKTerm, or
 SerialMonitor (VSCode), and attach to the Feather at 9600 baud. The Feather
 will appear as an "Abstract Control Model" device (e.g. `ttyACM0`).
@@ -42,10 +58,10 @@ test"). Once this message has appeared, the test is running.
 You should see output similar to the output shown below:
 
 ```
-Temperature = 22.38 Â°C
+Temperature = 22.38 °C
 Pressure = 969.66 hPa
 Approx. Altitude = 369.44 m
-Humidity = 100.00 %
+Humidity = 58.14 %
 ```
 
 Test Assertion

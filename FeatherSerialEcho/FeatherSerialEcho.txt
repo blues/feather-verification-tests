@@ -10,6 +10,10 @@ This test is intended to validate the following Serial ports:
 Setup
 -----
 
+### IDE
+
+Compile and flash using the Arduino IDE v2.x
+
 ### USB
 
 Connect a standard USB cable from your PC to the Feather. Open a serial

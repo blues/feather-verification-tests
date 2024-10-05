@@ -6,6 +6,10 @@ This test is intended to validate the 3V3 regulator.
 Setup
 -----
 
+### IDE
+
+Compile and flash using the Arduino IDE v2.x
+
 ### Breadboard
 
 - Place an LED with the positive leg on the row with the `3V3` pin of the

@@ -6,6 +6,10 @@ This test is intended to validate the digital output behavior of the GPIO pins.
 Setup
 -----
 
+### IDE
+
+Compile and flash using the Arduino IDE v2.x
+
 ### Breadboard
 
 - Place 13 LEDs in a breadboard with the negative leg of each LED in the

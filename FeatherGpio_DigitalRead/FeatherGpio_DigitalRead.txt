@@ -6,13 +6,17 @@ This test is intended to validate the digital input behavior of the GPIO pins.
 Setup
 -----
 
+### IDE
+
+Compile and flash using the Arduino IDE v2.x
+
 ### Breadboard
 
 - Place a jumper wire between the `GND` header pin of the Feather and the
 negative (blue/-) rail of the breadboard.
 - Place a jumper wire between the `3V3` header pin of the Feather and the
 positive (red/+) rail of the breadboard.
-- Place a jumper wires between the negative rail and each of the following pins:
+- Place jumper wires between the negative rail and each of the following pins:
 `A0`, `A1`, `A2`, `A3`, `A4`, `A5`, `D5`, `D6`, `D9`, `D10`, `D11`, `D12`, `D13`
 
 ### STLINK
