@@ -98,7 +98,7 @@ void setup() {
   pinMode(D11, INPUT_PULLUP);
   pinMode(D12, INPUT_PULLUP);
   pinMode(D13, INPUT_PULLUP);
-  pinMode(USER_BTN, INPUT_PULLUP);
+  pinMode(USER_BTN, INPUT);
 
   // Attach Interrupts
   attachInterrupt(digitalPinToInterrupt(A0),       ISR_a0,       RISING);
