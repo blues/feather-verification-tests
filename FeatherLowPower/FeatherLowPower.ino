@@ -19,6 +19,7 @@ void ISR_user_btn (void) {
 
 // the setup function runs once when you press reset or power the board
 void setup() {
+  // Required to ensure unused peripherals remain dormant
   Serial.end();
 
   // Initialize Built-in LED
@@ -30,7 +31,7 @@ void setup() {
   attachInterrupt(digitalPinToInterrupt(USER_BTN), ISR_user_btn, RISING);
 
   // Initialize the LPUART for logging
-  stlinkSerial.begin(115200);
+  stlinkSerial.begin(9600);
   const size_t stlinkSerial_timeout_ms = 3000;
   for (const size_t start_ms = millis(); !stlinkSerial && (millis() - start_ms) < stlinkSerial_timeout_ms;);
 
@@ -38,6 +39,9 @@ void setup() {
   LowPower.begin();
 
   stlinkSerial.println("Running Feather Low Power Test");
+  stlinkSerial.println("NOTE: The STLINK must be unplugged for accurate power measurement");
+  stlinkSerial.println("--------------------------------");
+  stlinkSerial.println("Press USER button to sleep/wake.");
 }
 
 // the loop function runs over and over again forever
@@ -118,12 +122,13 @@ void powerDownPeripherals () {
     disableGpio();
 
     // Disable the LPUART
+    stlinkSerial.println("Press USER button to wake.");
     stlinkSerial.end();
 }
 
 void powerUpPeripherals () {
   // Enable the LPUART
-  stlinkSerial.begin(115200);
+  stlinkSerial.begin(9600);
   const size_t stlinkSerial_timeout_ms = 3000;
   for (const size_t start_ms = millis(); !stlinkSerial && (millis() - start_ms) < stlinkSerial_timeout_ms;);
 
@@ -142,4 +147,5 @@ void wake (void) {
   attachInterrupt(digitalPinToInterrupt(USER_BTN), ISR_user_btn, RISING);
 
   stlinkSerial.println("Exited Deep Sleep");
+  stlinkSerial.println("Press USER button to sleep.");
 }
