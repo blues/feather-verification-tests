@@ -75,35 +75,25 @@ void disable3V3Regulator() {
 }
 
 void disableGpio () {
+  // User Button
+  pinMode(USER_BTN, INPUT_PULLUP);
+
   // Analog Pins
-  pinMode(A0,OUTPUT);
-  digitalWrite(A0,LOW);
-  pinMode(A1,OUTPUT);
-  digitalWrite(A1,LOW);
-  pinMode(A2,OUTPUT);
-  digitalWrite(A2,LOW);
-  pinMode(A3,OUTPUT);
-  digitalWrite(A3,LOW);
-  pinMode(A4,OUTPUT);
-  digitalWrite(A4,LOW);
-  pinMode(A5,OUTPUT);
-  digitalWrite(A5,LOW);
+  pinMode(A0,INPUT_ANALOG);
+  pinMode(A1,INPUT_ANALOG);
+  pinMode(A2,INPUT_ANALOG);
+  pinMode(A3,INPUT_ANALOG);
+  pinMode(A4,INPUT_ANALOG);
+  pinMode(A5,INPUT_ANALOG);
 
   // Digital Pins
-  pinMode(5,OUTPUT);
-  digitalWrite(5,LOW);
-  pinMode(6,OUTPUT);
-  digitalWrite(6,LOW);
-  pinMode(9,OUTPUT);
-  digitalWrite(9,LOW);
-  pinMode(10,OUTPUT);
-  digitalWrite(10,LOW);
-  pinMode(11,OUTPUT);
-  digitalWrite(11,LOW);
-  pinMode(12,OUTPUT);
-  digitalWrite(12,LOW);
-  pinMode(13,OUTPUT);
-  digitalWrite(13,LOW);
+  pinMode(5,INPUT_ANALOG);
+  pinMode(6,INPUT_ANALOG);
+  pinMode(9,INPUT_ANALOG);
+  pinMode(10,INPUT_ANALOG);
+  pinMode(11,INPUT_ANALOG);
+  pinMode(12,INPUT_ANALOG);
+  pinMode(13,INPUT_ANALOG);
 }
 
 void enable3V3Regulator() {
