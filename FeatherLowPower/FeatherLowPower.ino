@@ -7,6 +7,10 @@
   by Zachary J. Fields
 */
 
+#ifdef USBCON
+#error "Please disable USB support in order to get correct deep sleep current measurements."
+#endif
+
 #include <STM32LowPower.h>
 
 volatile static bool user_btn = false;
