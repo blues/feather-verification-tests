@@ -13,7 +13,7 @@ void setup()
 
     LowPower.begin();
 
-    notecard.begin(Serial1);
+    notecard.begin();
 
     // Comment out this line to stop the leak.  Note that the bug is that this line, or
     // ANY notecard I/O over I2C, causes a ~300uA leak when in deep sleep. Note that I
