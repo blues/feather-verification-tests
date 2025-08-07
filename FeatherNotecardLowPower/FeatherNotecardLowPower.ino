@@ -13,7 +13,7 @@ void setup()
 
     LowPower.begin();
 
-    notecard.begin();
+    notecard.begin(Serial1);
 
     // Comment out this line to stop the leak.  Note that the bug is that this line, or
     // ANY notecard I/O over I2C, causes a ~300uA leak when in deep sleep. Note that I
@@ -25,9 +25,7 @@ void setup()
 
 void loop()
 {
-
     notecard.end();				// I tried, but this has no effect on stopping the current leak
-    Wire.end();					// I tried, but This has no effect on stopping the current leak
 
     pinMode(USER_BTN, INPUT_ANALOG);
     pinMode(LED_BUILTIN, INPUT_ANALOG);
@@ -48,5 +46,4 @@ void loop()
     pinMode(13,INPUT_ANALOG);
 
     LowPower.deepSleep();
-
 }
