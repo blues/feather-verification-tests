@@ -21,6 +21,8 @@ void setup() {
   pinMode(A3, INPUT);
   pinMode(A4, INPUT);
   pinMode(A5, INPUT);
+  pinMode(A6, INPUT);
+  pinMode(A7, INPUT);
 
   analogReadResolution(10);
 
@@ -45,7 +47,7 @@ void setup() {
 
 // the loop function runs over and over again forever
 void loop() {
-  uint16_t active_pin = (gpio_pin++ % 6);
+  uint16_t active_pin = (gpio_pin++ % 8);
   if (!active_pin) {
     stlinkSerial.println();
     delay(1000);
@@ -78,6 +80,14 @@ void roll_gpio (uint16_t gpio_pin_) {
     case 0x0020:
       stlinkSerial.print("A5: ");
       stlinkSerial.println(analogRead(A5));
+      break;
+    case 0x0040:
+      stlinkSerial.print("A6: ");
+      stlinkSerial.println(analogRead(A6));
+      break;
+    case 0x0080:
+      stlinkSerial.print("A7: ");
+      stlinkSerial.println(analogRead(A7));
       break;
   }
 }

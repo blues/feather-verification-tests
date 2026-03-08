@@ -66,6 +66,6 @@ approximating those shown in the example output above.
 Test Assertion
 --------------
 
-This test asserts that the LPUART must be functional as a serial inteface. If
-LPUART is unavailable, then the onboard LED will blink rapidly indicating the
+This test asserts that the VCP must be functional as a serial inteface. If
+VCP is unavailable, then the onboard LED will blink rapidly indicating the
 test has catastrophically failed.
