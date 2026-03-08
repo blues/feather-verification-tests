@@ -41,7 +41,7 @@ void setup() {
 // the loop function runs over and over again forever
 void loop() {
   roll_gpio(gpio_pin++%14);
-  delay(250);
+  delay(500);
 }
 
 void roll_gpio (uint16_t gpio_pin_) {
