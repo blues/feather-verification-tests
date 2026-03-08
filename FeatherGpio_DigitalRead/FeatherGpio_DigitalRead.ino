@@ -28,19 +28,19 @@ HardwareSerial stlinkSerial(PIN_VCP_RX, PIN_VCP_TX);
 void setup() {
 
   // Initialize pins for GPIO Tests
-  pinMode(A0, INPUT);
-  pinMode(A1, INPUT);
-  pinMode(A2, INPUT);
-  pinMode(A3, INPUT);
-  pinMode(A4, INPUT);
-  pinMode(A5, INPUT);
-  pinMode(D5, INPUT);
-  pinMode(D6, INPUT);
-  pinMode(D9, INPUT);
-  pinMode(D10, INPUT);
-  pinMode(D11, INPUT);
-  pinMode(D12, INPUT);
-  pinMode(D13, INPUT);
+  pinMode(A0, INPUT_PULLUP);
+  pinMode(A1, INPUT_PULLUP);
+  pinMode(A2, INPUT_PULLUP);
+  pinMode(A3, INPUT_PULLUP);
+  pinMode(A4, INPUT_PULLUP);
+  pinMode(A5, INPUT_PULLUP);
+  pinMode(D5, INPUT_PULLUP);
+  pinMode(D6, INPUT_PULLUP);
+  pinMode(D9, INPUT_PULLUP);
+  pinMode(D10, INPUT_PULLUP);
+  pinMode(D11, INPUT_PULLUP);
+  pinMode(D12, INPUT_PULLUP);
+  pinMode(D13, INPUT_PULLUP);
   pinMode(USER_BTN, INPUT);
 
   // Initialize the LPUART for logging
