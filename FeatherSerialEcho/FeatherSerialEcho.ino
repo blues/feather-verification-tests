@@ -19,7 +19,7 @@ HardwareSerial stlinkSerial(PIN_VCP_RX, PIN_VCP_TX);
 // the setup function runs once when you press reset or power the board
 void setup() {
 
-  // Initialize the LPUART for testing
+  // Initialize the Virtual COM Port for testing
   stlinkSerial.begin(115200);
   const size_t stlinkSerial_timeout_ms = 3000;
   for (const size_t start_ms = millis(); !stlinkSerial && (millis() - start_ms) < stlinkSerial_timeout_ms;);
@@ -56,7 +56,7 @@ void setup() {
 
   if (stlinkSerialAvailable) {
     printSerialInterfaceStatus(stlinkSerial);
-    stlinkSerial.println("Running Feather Serial Echo Test (LPUART)");
+    stlinkSerial.println("Running Feather Serial Echo Test (VCP)");
   }
   if (txRxPinsSerialAvailable) {
     printSerialInterfaceStatus(txRxPinsSerial);
@@ -89,11 +89,11 @@ void loop() {
 
 void printSerialInterfaceStatus (Stream & serial_) {
   serial_.println("Serial interface status:");
-  serial_.print("\t- LPUART: ");
-  serial_.println(stlinkSerialAvailable ? "OK" : "N/A");
-  serial_.print("\t- UART:   ");
+  serial_.print("\t- UART: ");
   serial_.println(txRxPinsSerialAvailable ? "OK" : "N/A");
-  serial_.print("\t- USB:    ");
+  serial_.print("\t- USB:  ");
   serial_.println(usbSerialAvailable ? "OK" : "N/A");
+  serial_.print("\t- VCP:  ");
+  serial_.println(stlinkSerialAvailable ? "OK" : "N/A");
   serial_.println();
 }

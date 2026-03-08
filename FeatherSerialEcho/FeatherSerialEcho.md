@@ -5,7 +5,7 @@ This test is intended to validate the following Serial ports:
 
 - USB
 - UART (RX/TX)
-- LPUART
+- VCP
 
 Setup
 -----
@@ -28,7 +28,7 @@ yellow - tx). Open a serial monitoring application, such as CoolTerm, GTKTerm,
 or SerialMonitor (VSCode), and attach to the FTDI controller at 9600 baud. The
 FTDI controller will appear as a "USB Serial" device (e.g. `ttyUSB0`).
 
-### LPUART
+### VCP
 
 Connect a standard USB cable from your PC to the STLINK, then a 14-pin ribbon
 cable to the STDC14 connector (a.k.a. JTAG) on the Feather. Open a serial
