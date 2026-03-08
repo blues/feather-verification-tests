@@ -12,11 +12,12 @@ HardwareSerial stlinkSerial(PIN_VCP_RX, PIN_VCP_TX);
 // the setup function runs once when you press reset or power the board
 void setup() {
 
-  // Initialize 3V3 Regulator to default state
-  pinMode(ENABLE_3V3, OUTPUT);
-  pinMode(DISCHARGE_3V3, OUTPUT);
-  digitalWrite(DISCHARGE_3V3, DISABLE_DISCHARGING);
-  digitalWrite(ENABLE_3V3, HIGH);
+  // The 3V3 Regulator is initialized as analog during `initVariant()`
+  // Equivalent Instruction(s):
+  // pinMode(ENABLE_3V3, OUTPUT);
+  // pinMode(DISCHARGE_3V3, OUTPUT);
+  // digitalWrite(DISCHARGE_3V3, DISABLE_DISCHARGING);
+  // digitalWrite(ENABLE_3V3, HIGH);
 
   // Initialize the LPUART for logging
   stlinkSerial.begin(115200);
@@ -28,10 +29,11 @@ void setup() {
 
 // the loop function runs over and over again forever
 void loop() {
+  // Toggle the regulator at 0.5Hz
   disable3V3Regulator();
-  delay(1000);
+  delay(2000);
   enable3V3Regulator();
-  delay(1000);
+  delay(2000);
 }
 
 void disable3V3Regulator() {
