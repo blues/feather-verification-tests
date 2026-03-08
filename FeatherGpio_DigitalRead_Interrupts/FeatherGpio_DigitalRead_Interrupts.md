@@ -43,6 +43,6 @@ breadboard. You will see output for each pin that looks similar message from
 Test Assertion
 --------------
 
-This test asserts that the LPUART must be functional as a serial inteface. If
-LPUART is unavailable, then the onboard LED will blink rapidly indicating the
+This test asserts that the VCP must be functional as a serial inteface. If
+VCP is unavailable, then the onboard LED will blink rapidly indicating the
 test has catastrophically failed.
