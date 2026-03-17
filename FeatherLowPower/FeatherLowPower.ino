@@ -76,6 +76,8 @@ void deepSleep (void) {
 void disable3V3Regulator() {
   digitalWrite(ENABLE_3V3, LOW);
   digitalWrite(DISCHARGE_3V3, ENABLE_DISCHARGING);
+  delay(1);
+  digitalWrite(DISCHARGE_3V3, DISABLE_DISCHARGING);
 }
 
 void disableGpio () {
