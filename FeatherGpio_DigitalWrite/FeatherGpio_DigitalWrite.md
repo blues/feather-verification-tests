@@ -37,6 +37,9 @@ is running.
 Each LEDs will light up sequentially, as the code loops through the GPIO pins
 and turns on and off each one (including the Onboard LED).
 
+> _**WARNING:** The roll-over transition from 255 % 14 (3) to 0 % 14 (0) causes
+> an observable glitch in the pattern._
+
 Test Assertion
 --------------
 

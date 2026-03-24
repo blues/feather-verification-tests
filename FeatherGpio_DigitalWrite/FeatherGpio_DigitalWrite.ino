@@ -40,6 +40,8 @@ void setup() {
 
 // the loop function runs over and over again forever
 void loop() {
+  // _**WARNING:** The roll-over transition from 255 % 14 (3)
+  // to 0 % 14 (0) causes an observable glitch in the pattern._
   roll_gpio(gpio_pin++%14);
   delay(500);
 }
