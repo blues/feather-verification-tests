@@ -40,6 +40,8 @@ void setup() {
 
 // the loop function runs over and over again forever
 void loop() {
+  // _**WARNING:** The roll-over transition from 255 % 14 (3)
+  // to 0 % 14 (0) causes an observable glitch in the pattern._
   roll_gpio(gpio_pin++%14);
 }
 
@@ -80,12 +82,19 @@ void roll_gpio (uint16_t gpio_pin_) {
       led_glow(D5);
       break;
     case 0x0080:
+      // PWM on D6 is not possible on the Cygnet hardware.
+      // No timer output AF available on PB9 for the STM32L433C.
       led_glow(D6);
       break;
     case 0x0100:
       led_glow(D9);
       break;
     case 0x0200:
+      // PWM on D10 is disabled on the Cygnet in favor of A5.
+      // Both PA7 (A5) and PB13 (D10) are routed to TIM1_CH1N,
+      // Therefore, they cannot be driven independently; assigning
+      // TIM1_CH1N to D10 means it will conflict with A5 whenever
+      // both are used for PWM simultaneously.
       led_glow(D10);
       break;
     case 0x0400:
@@ -95,6 +104,8 @@ void roll_gpio (uint16_t gpio_pin_) {
       led_glow(D12);
       break;
     case 0x1000:
+      // PWM on D13 is not possible on the Cygnet hardware.
+      // Only possible timer (TIM3_CH1) doesn't exist on the STM32L433C.
       led_glow(D13);
       break;
     case 0x2000:
