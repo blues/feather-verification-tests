@@ -40,7 +40,11 @@ void disable3V3Regulator() {
   digitalWrite(ENABLE_3V3, LOW);
   digitalWrite(DISCHARGE_3V3, ENABLE_DISCHARGING);
   delay(1);
-  digitalWrite(DISCHARGE_3V3, DISABLE_DISCHARGING);
+  // _**NOTE:** Digital input leaves Schmitt trigger still active), which can still
+  // leak enough current through ESD protection diodes and the trigger to partially
+  // source through R15. Whereas, analog input leaves the pin is fully disconnected
+  // from both the output driver and the digital input path. True High-Z._
+  analogRead(DISCHARGE_3V3);  // Set to High-Z
 }
 
 void enable3V3Regulator() {
