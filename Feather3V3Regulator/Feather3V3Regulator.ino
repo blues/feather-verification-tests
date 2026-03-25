@@ -15,7 +15,7 @@ void setup() {
   // The 3V3 Regulator is initialized as analog during `initVariant()`
   // Equivalent Instruction(s):
   // pinMode(ENABLE_3V3, OUTPUT);
-  // pinMode(DISCHARGE_3V3, OUTPUT);
+  // pinMode(DISCHARGE_3V3, OUTPUT_OPEN_DRAIN);
   // digitalWrite(DISCHARGE_3V3, DISABLE_DISCHARGING);
   // digitalWrite(ENABLE_3V3, HIGH);
 
@@ -29,25 +29,9 @@ void setup() {
 
 // the loop function runs over and over again forever
 void loop() {
-  // Toggle the regulator at 0.5Hz
-  disable3V3Regulator();
+  // Toggle the regulator at 0.25Hz
+  DISABLE_3V3_REGULATOR();
+  DRAIN_3V3_REGULATOR_MS(2000);
+  ENABLE_3V3_REGULATOR();
   delay(2000);
-  enable3V3Regulator();
-  delay(2000);
-}
-
-void disable3V3Regulator() {
-  digitalWrite(ENABLE_3V3, LOW);
-  digitalWrite(DISCHARGE_3V3, ENABLE_DISCHARGING);
-  delay(1);
-  // _**NOTE:** Digital input leaves Schmitt trigger still active), which can still
-  // leak enough current through ESD protection diodes and the trigger to partially
-  // source through R15. Whereas, analog input leaves the pin is fully disconnected
-  // from both the output driver and the digital input path. True High-Z._
-  analogRead(DISCHARGE_3V3);  // Set to High-Z
-}
-
-void enable3V3Regulator() {
-  digitalWrite(DISCHARGE_3V3, DISABLE_DISCHARGING);
-  digitalWrite(ENABLE_3V3, HIGH);
 }
