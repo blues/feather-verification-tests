@@ -73,13 +73,6 @@ void deepSleep (void) {
     LowPower.deepSleep();
 }
 
-void disable3V3Regulator() {
-  digitalWrite(ENABLE_3V3, LOW);
-  digitalWrite(DISCHARGE_3V3, ENABLE_DISCHARGING);
-  delay(1);
-  digitalWrite(DISCHARGE_3V3, DISABLE_DISCHARGING);
-}
-
 void disableGpio () {
   // User Button
   pinMode(USER_BTN, INPUT_PULLUP);
@@ -102,17 +95,13 @@ void disableGpio () {
   pinMode(13,INPUT_ANALOG);
 }
 
-void enable3V3Regulator() {
-  digitalWrite(DISCHARGE_3V3, DISABLE_DISCHARGING);
-  digitalWrite(ENABLE_3V3, HIGH);
-}
-
 void powerDownPeripherals () {
     // Turn off the LED
     digitalWrite(LED_BUILTIN, LOW);
 
     // Disable the 3V3 Regulator
-    disable3V3Regulator();
+    DISABLE_3V3_REGULATOR();
+    DRAIN_3V3_REGULATOR_MS(1500);
 
     // Disable the GPIO
     disableGpio();
@@ -129,7 +118,7 @@ void powerUpPeripherals () {
   for (const size_t start_ms = millis(); !stlinkSerial && (millis() - start_ms) < stlinkSerial_timeout_ms;);
 
   // Enable the 3V3 Regulator
-  enable3V3Regulator();
+  ENABLE_3V3_REGULATOR();
 
   // Turn on the LED
   digitalWrite(LED_BUILTIN, HIGH);
