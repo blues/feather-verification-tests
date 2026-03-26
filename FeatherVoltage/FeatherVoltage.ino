@@ -3,21 +3,32 @@
 
   Used to test the configuration of new boards added to the STM32 core.
 
-  modified 31 May 2024
+  modified 26 March 2026
   by Zachary J. Fields
 */
 
-#define BAT_VOLTAGE PA4
+volatile static bool changeDetectNotCharge = false;
+volatile static bool changeDetectUsb = false;
 
 HardwareSerial stlinkSerial(PIN_VCP_RX, PIN_VCP_TX);
+
+void ISR_detectNotCharge (void) {
+  changeDetectNotCharge = true;
+}
+
+void ISR_detectUsb (void) {
+  changeDetectUsb = true;
+}
+
+static const uint32_t MV_REPORT_MS = 3000;
+uint32_t mv_last_report = static_cast<uint32_t>(-MV_REPORT_MS);
 
 // the setup function runs once when you press reset or power the board
 void setup() {
 
-  // Initialize pins for GPIO Tests
-  pinMode(BAT_VOLTAGE, INPUT);
-
-  analogReadResolution(10);
+  // `VMAIN_ADC` pin is initialized as analog during `initVariant()`
+  // Equivalent Instruction(s):
+  // pinMode(VMAIN_ADC, ANALOG_INPUT);
 
   // Initialize the LPUART for logging
   stlinkSerial.begin(115200);
@@ -35,13 +46,38 @@ void setup() {
     };
   }
 
+  // Configure pins to listen for signals
+  pinMode(CHARGE_DETECT, INPUT_PULLUP);
+  pinMode(USB_DETECT, INPUT_PULLDOWN);
+
+  // Connect to signals
+  attachInterrupt(digitalPinToInterrupt(CHARGE_DETECT), ISR_detectNotCharge, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(USB_DETECT),    ISR_detectUsb,       CHANGE);
+
   stlinkSerial.println("Running Feather Voltage Test");
 }
 
 // the loop function runs over and over again forever
 void loop() {
-    stlinkSerial.print("V: ");
-    stlinkSerial.print(analogRead(PA4));
-    stlinkSerial.println(" / 1023");
-    delay(1000);
+  if (changeDetectUsb) {
+    stlinkSerial.print("USB ");
+    stlinkSerial.println(digitalRead(USB_DETECT) ? "connected" : "disconnected");
+    delay(100); // debounce
+    changeDetectUsb = false;
+  }
+
+  if (changeDetectNotCharge) {
+    stlinkSerial.print("Battery ");
+    stlinkSerial.print(digitalRead(CHARGE_DETECT) ? "not " : "");
+    stlinkSerial.println("charging");
+    delay(500); // debounce
+    changeDetectNotCharge = false;
+  }
+
+  uint32_t now_ms = millis();
+  if ((now_ms - mv_last_report) > MV_REPORT_MS) {
+    mv_last_report = now_ms;
+    stlinkSerial.print(VMAIN_MV());
+    stlinkSerial.println("mV");
+  }
 }
