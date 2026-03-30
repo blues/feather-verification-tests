@@ -50,11 +50,15 @@ void setup() {
 // the loop function runs over and over again forever
 void loop() {
 #if ARDUINO_CYGNET
+  // _**WARNING:** The roll-over transition from 255 % 6 (3)
+  // to 0 % 6 (0) causes an observable glitch in the pattern._
   uint16_t active_pin = (gpio_pin++ % 6);
 #elif ARDUINO_SWAN_R5
+  // _**WARNING:** The roll-over transition from 255 % 8 (7)
+  // to 0 % 8 (0) causes an observable glitch in the pattern._
   uint16_t active_pin = (gpio_pin++ % 8);
 #else
-  uint16_t active_pin = (gpio_pin++ % 1);
+  uint16_t active_pin = 0;
   stlinkSerial.println("Unknown board.");
   while(1);
 #endif

@@ -63,6 +63,9 @@ Rotate the jumper wires, until all wires have visited each test point (as
 described in the setup procedure). You should expecte to see a value
 approximating those shown in the example output above.
 
+> _**WARNING:** The roll-over transition from 255 % x (y)
+> to 0 % x (0) causes an observable glitch in the pattern._
+
 Test Assertion
 --------------
 
