@@ -21,8 +21,10 @@ void setup() {
   pinMode(A3, INPUT);
   pinMode(A4, INPUT);
   pinMode(A5, INPUT);
+#if ARDUINO_SWAN_R5
   pinMode(A6, INPUT);
   pinMode(A7, INPUT);
+#endif
 
   analogReadResolution(10);
 
@@ -47,7 +49,15 @@ void setup() {
 
 // the loop function runs over and over again forever
 void loop() {
+#if ARDUINO_CYGNET
+  uint16_t active_pin = (gpio_pin++ % 6);
+#elif ARDUINO_SWAN_R5
   uint16_t active_pin = (gpio_pin++ % 8);
+#else
+  uint16_t active_pin = (gpio_pin++ % 1);
+  stlinkSerial.println("Unknown board.");
+  while(1);
+#endif
   if (!active_pin) {
     stlinkSerial.println();
     delay(1000);
@@ -81,6 +91,7 @@ void roll_gpio (uint16_t gpio_pin_) {
       stlinkSerial.print("A5: ");
       stlinkSerial.println(analogRead(A5));
       break;
+#if ARDUINO_SWAN_R5
     case 0x0040:
       stlinkSerial.print("A6: ");
       stlinkSerial.println(analogRead(A6));
@@ -89,5 +100,6 @@ void roll_gpio (uint16_t gpio_pin_) {
       stlinkSerial.print("A7: ");
       stlinkSerial.println(analogRead(A7));
       break;
+#endif
   }
 }
