@@ -4,9 +4,11 @@
 
   Used to test the configuration of new boards added to the STM32 core.
 
-  modified 31 May 2024
+  modified 30 March 2026
   by Zachary J. Fields
 */
+
+#define TEST_SHARED_EXTI 0
 
 static bool a0 = false;
 static bool a1 = false;
@@ -105,16 +107,22 @@ void setup() {
   attachInterrupt(digitalPinToInterrupt(A1),       ISR_a1,       RISING);
   attachInterrupt(digitalPinToInterrupt(A2),       ISR_a2,       RISING);
   attachInterrupt(digitalPinToInterrupt(A3),       ISR_a3,       RISING);
+#if not TEST_SHARED_EXTI
   attachInterrupt(digitalPinToInterrupt(A4),       ISR_a4,       RISING);
+#endif
   attachInterrupt(digitalPinToInterrupt(A5),       ISR_a5,       RISING);
   attachInterrupt(digitalPinToInterrupt(D5),       ISR_d5,       RISING);
   attachInterrupt(digitalPinToInterrupt(D6),       ISR_d6,       RISING);
   attachInterrupt(digitalPinToInterrupt(D9),       ISR_d9,       RISING);
   attachInterrupt(digitalPinToInterrupt(D10),      ISR_d10,      RISING);
+#if not TEST_SHARED_EXTI
   attachInterrupt(digitalPinToInterrupt(D11),      ISR_d11,      RISING);
+#endif
   attachInterrupt(digitalPinToInterrupt(D12),      ISR_d12,      RISING);
   attachInterrupt(digitalPinToInterrupt(D13),      ISR_d13,      RISING);
+#if not TEST_SHARED_EXTI
   attachInterrupt(digitalPinToInterrupt(USER_BTN), ISR_user_btn, RISING);
+#endif
 
   // Initialize the LPUART for logging
   stlinkSerial.begin(115200);
@@ -133,12 +141,21 @@ void setup() {
   }
 
   stlinkSerial.println("Running Feather GPIO Digital Read Interrupt Test");
+  #ifdef ARDUINO_CYGNET
+  #if TEST_SHARED_EXTI
+    stlinkSerial.println("Shared interrupts on A0, A1 and D10 now available.");
+  #else
+    stlinkSerial.println("Shared interrupts on A4, D11 and USER_BTN now available.");
+  #endif
+  #endif
 }
 
 // the loop function runs over and over again forever
 void loop() {
   // Check for pin A0 interrupt
   if (a0) {
+    // The interrupt (EXTI0) on A0 is shared with D11 on the Cygnet hardware.
+    // The interrupt will only attach to whichever pin was configured last.
     delay(100);
     a0 = false;
     stlinkSerial.println("A0: Interrupt");
@@ -146,6 +163,8 @@ void loop() {
 
   // Check for pin A1 interrupt
   if (a1) {
+    // The interrupt (EXTI1) on A1 is shared with A4 on the Cygnet hardware.
+    // The interrupt will only attach to whichever pin was configured last.
     delay(100);
     a1 = false;
     stlinkSerial.println("A1: Interrupt");
@@ -202,6 +221,8 @@ void loop() {
 
   // Check for pin D10 interrupt
   if (d10) {
+    // The interrupt (EXTI13) on D10 is shared with USER_BTN on the Cygnet hardware.
+    // The interrupt will only attach to whichever pin was configured last.
     delay(100);
     d10 = false;
     stlinkSerial.println("D10: Interrupt");

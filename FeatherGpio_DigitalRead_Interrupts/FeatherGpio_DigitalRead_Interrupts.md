@@ -40,6 +40,22 @@ Next, pull each of the jumpers out of the negative (blue/-) rail of the
 breadboard. You will see output for each pin that looks similar message from
 `USER_BTN`.
 
+### Shared Interrupts
+
+- The interrupt (EXTI0) on A0 is shared with D11 on the Cygnet hardware.
+- The interrupt (EXTI1) on A1 is shared with A4 on the Cygnet hardware.
+- The interrupt (EXTI13) on D10 is shared with USER_BTN on the Cygnet hardware.
+
+A message should print informing you which interrupts the sketch is currently testing.
+
+Example:
+
+```
+Shared interrupts on A4, D11 and USER_BTN now available.
+```
+
+Set `TEST_SHARED_EXTI` to `1`, to test the remaining interrupts.
+
 Test Assertion
 --------------
 
