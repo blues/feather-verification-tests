@@ -46,6 +46,8 @@ Test (UART)"). Once this message has appeared, the test is ready.
 Enter any text into each of the terminals, and you should see that text echoed
 back in the respective terminal.
 
+> _**NOTE:** USB does not resolve `true` until terminal is connected._
+
 Test Assertion
 --------------
 

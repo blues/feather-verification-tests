@@ -40,6 +40,7 @@ void setup() {
   const size_t usb_timeout_ms = 3000;
   for (const size_t start_ms = millis(); !usbSerial && (millis() - start_ms) < usb_timeout_ms;);
   if (usbSerial) {
+    // USB does not resolve `true` until terminal is connected.
     usbSerialAvailable = true;
   }
 
