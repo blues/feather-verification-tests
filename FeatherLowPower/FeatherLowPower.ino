@@ -13,6 +13,11 @@
 
 #include <STM32LowPower.h>
 
+#define CX 1
+#if CX
+#  include <Notecard.h>
+#endif
+
 volatile static bool user_btn = false;
 
 HardwareSerial stlinkSerial(PIN_VCP_RX, PIN_VCP_TX);
@@ -21,8 +26,45 @@ void ISR_user_btn (void) {
   user_btn = true;
 }
 
+#if CX
+Notecard nc;
+#endif
+
 // the setup function runs once when you press reset or power the board
 void setup() {
+
+#if CX
+  // If Notecarrier-CX, then issue requests to
+  // place the Notecard in a low-power state.
+  nc.begin();
+
+  {
+    J* req = nc.newRequest("hub.set");
+    JAddStringToObject(req,"mode","off");
+    nc.sendRequest(req);
+  }
+
+  {
+    J* req = nc.newRequest("card.attn");
+    JAddBoolToObject(req,"off",true);
+    nc.sendRequest(req);
+  }
+
+  {
+    J* req = nc.newRequest("card.motion.mode");
+    JAddBoolToObject(req,"stop",true);
+    nc.sendRequest(req);
+  }
+
+  {
+    J* req = nc.newRequest("card.sleep");
+    JAddBoolToObject(req,"on",true);
+    nc.sendRequest(req);
+  }
+
+  nc.end();
+#endif
+
   // Required to ensure unused peripherals remain dormant
   Serial.end();
 

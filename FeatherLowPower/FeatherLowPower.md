@@ -29,6 +29,15 @@ Feather Low Power Test"). Once this message has appeared, the test is running.
 Press the `USER_BTN` to toggle between **standard** and **deep sleep** running
 modes.
 
+### Notecarrier-CX
+
+```
+#define CX 1
+```
+
+Set the `CX` define to ensure a connected Notecard is placed configured for
+low-power.
+
 > _**WARNING:** Once you are certain the test is running, ensure STLINK and USB
 > are unplugged, as they will draw significant current._
 
