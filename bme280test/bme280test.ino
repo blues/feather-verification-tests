@@ -28,17 +28,25 @@
 
 #define SEALEVELPRESSURE_HPA (1013.25)
 
+#define TEST_I2C 1
+#define TEST_QWIIC_VCC 1
+
+#if TEST_I2C
 Adafruit_BME280 bme; // I2C
-// Adafruit_BME280 bme(BME_CS); // hardware SPI
+#else
+Adafruit_BME280 bme(PIN_SPI_SS); // hardware SPI
 // Adafruit_BME280 bme(BME_CS, BME_MOSI, BME_MISO, BME_SCK); // software SPI
+#endif
 
 unsigned long delayTime;
 
 void setup() {
+#if (TEST_I2C && TEST_QWIIC_VCC)
     // The 3V3 regulator must be disabled to validate the 3V3 line of the Qwiic
     // connector is supplied by VIO, as opposed to the 3V3 regulator.
-    digitalWrite(ENABLE_3V3, LOW);
-    digitalWrite(DISCHARGE_3V3, ENABLE_DISCHARGING);
+    DISABLE_3V3_REGULATOR();
+    DRAIN_3V3_REGULATOR_MS(1500);
+#endif
 
     Serial.begin(9600);
     while(!Serial);    // time to get serial running
@@ -61,7 +69,7 @@ void setup() {
     }
 
     Serial.println("-- Default Test --");
-    delayTime = 1000;
+    delayTime = 15000;
 
     Serial.println();
 }

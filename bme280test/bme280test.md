@@ -15,12 +15,37 @@ Compile and flash using the Arduino IDE v2.x
 
 ### I2C
 
-Connect a Qwiic cable from the Feather to an Adafruit BME280. Open a serial
-monitoring application, such as CoolTerm, GTKTerm, or SerialMonitor (VSCode),
-and attach to the Feather at 9600 baud. The Feather will appear as an "Abstract
-Control Model" device (e.g. `ttyACM0`).
+#### Qwiic
+
+```cpp
+#define TEST_I2C 1
+#define TEST_QWIIC 1
+```
+
+Connect a Qwiic cable from the Feather to an Adafruit BME280.
+
+#### Feather Pins
+
+```cpp
+#define TEST_I2C 1
+#define TEST_QWIIC 0
+```
+
+Place the jumper wires according to the following table:
+
+| Feather | Adafruit BME280 |
+|:-------:|:---------------:|
+|  `3V3`  |      `VIN`      |
+|  `GND`  |      `GND`      |
+|  `SCL`  |      `SCK`      |
+|  `SDA`  |      `SDI`      |
 
 ### SPI
+
+```cpp
+#define TEST_I2C 0
+#define TEST_QWIIC 0  // Doesn't matter
+```
 
 Place the jumper wires according to the following table:
 
@@ -31,26 +56,14 @@ Place the jumper wires according to the following table:
 |  `CK`   |      `SCK`      |
 |  `MO`   |      `SDI`      |
 |  `MI`   |      `SDO`      |
-|  `D10`  |      `CS`       |
+|  `D11`  |      `CS`       |
 
-Comment out the line:
-
-```c++
-Adafruit_BME280 bme; // I2C
-```
-
-Uncomment the following line:
-
-```c++
-// Adafruit_BME280 bme(BME_CS); // hardware SPI
-```
+Usage
+-----
 
 Open a serial monitoring application, such as CoolTerm, GTKTerm, or
 SerialMonitor (VSCode), and attach to the Feather at 9600 baud. The Feather
 will appear as an "Abstract Control Model" device (e.g. `ttyACM0`).
-
-Usage
------
 
 On boot, you should see a "ready message" in the serial monitor (e.g. "BME280
 test"). Once this message has appeared, the test is running.
@@ -69,4 +82,4 @@ Test Assertion
 
 There is no assertion associated with this test.
 
-> _**NOTE:** This test is an unmodified Adafruit BME280 Library example sketch._
+> _**NOTE:** This test has been minimally modified from the Adafruit BME280 Library example sketch._
