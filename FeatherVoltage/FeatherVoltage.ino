@@ -47,11 +47,15 @@ void setup() {
   }
 
   // Configure pins to listen for signals
+#ifndef ARDUINO_SWAN_R5
   pinMode(CHARGE_DETECT, INPUT_PULLUP);
+#endif
   pinMode(USB_DETECT, INPUT_PULLDOWN);
 
   // Connect to signals
+#ifndef ARDUINO_SWAN_R5
   attachInterrupt(digitalPinToInterrupt(CHARGE_DETECT), ISR_detectNotCharge, CHANGE);
+#endif
   attachInterrupt(digitalPinToInterrupt(USB_DETECT),    ISR_detectUsb,       CHANGE);
 
   stlinkSerial.println("Running Feather Voltage Test");
@@ -66,6 +70,7 @@ void loop() {
     changeDetectUsb = false;
   }
 
+#ifndef ARDUINO_SWAN_R5
   if (changeDetectNotCharge) {
     stlinkSerial.print("Battery ");
     stlinkSerial.print(digitalRead(CHARGE_DETECT) ? "not " : "");
@@ -73,6 +78,7 @@ void loop() {
     delay(500); // debounce
     changeDetectNotCharge = false;
   }
+#endif
 
   uint32_t now_ms = millis();
   if ((now_ms - mv_last_report) > MV_REPORT_MS) {

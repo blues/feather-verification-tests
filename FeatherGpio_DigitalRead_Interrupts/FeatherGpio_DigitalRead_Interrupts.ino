@@ -105,22 +105,28 @@ void setup() {
   // Attach Interrupts
   attachInterrupt(digitalPinToInterrupt(A0),       ISR_a0,       RISING);
   attachInterrupt(digitalPinToInterrupt(A1),       ISR_a1,       RISING);
+#if not defined(ARDUINO_SWAN_R5) || not TEST_SHARED_EXTI
   attachInterrupt(digitalPinToInterrupt(A2),       ISR_a2,       RISING);
   attachInterrupt(digitalPinToInterrupt(A3),       ISR_a3,       RISING);
-#if not TEST_SHARED_EXTI
+#endif
+#if not defined(ARDUINO_CYGNET) || not TEST_SHARED_EXTI
   attachInterrupt(digitalPinToInterrupt(A4),       ISR_a4,       RISING);
 #endif
   attachInterrupt(digitalPinToInterrupt(A5),       ISR_a5,       RISING);
   attachInterrupt(digitalPinToInterrupt(D5),       ISR_d5,       RISING);
   attachInterrupt(digitalPinToInterrupt(D6),       ISR_d6,       RISING);
   attachInterrupt(digitalPinToInterrupt(D9),       ISR_d9,       RISING);
+#if not defined(ARDUINO_SWAN_R5) || not TEST_SHARED_EXTI
   attachInterrupt(digitalPinToInterrupt(D10),      ISR_d10,      RISING);
-#if not TEST_SHARED_EXTI
+#endif
+#if not defined(ARDUINO_CYGNET) || not TEST_SHARED_EXTI
   attachInterrupt(digitalPinToInterrupt(D11),      ISR_d11,      RISING);
 #endif
   attachInterrupt(digitalPinToInterrupt(D12),      ISR_d12,      RISING);
+#if not defined(ARDUINO_SWAN_R5) || not TEST_SHARED_EXTI
   attachInterrupt(digitalPinToInterrupt(D13),      ISR_d13,      RISING);
-#if not TEST_SHARED_EXTI
+#endif
+#if not defined(ARDUINO_CYGNET) || not TEST_SHARED_EXTI
   attachInterrupt(digitalPinToInterrupt(USER_BTN), ISR_user_btn, RISING);
 #endif
 
@@ -142,11 +148,17 @@ void setup() {
 
   stlinkSerial.println("Running Feather GPIO Digital Read Interrupt Test");
   #ifdef ARDUINO_CYGNET
-  #if TEST_SHARED_EXTI
-    stlinkSerial.println("Shared interrupts on A0, A1 and D10 now available.");
-  #else
-    stlinkSerial.println("Shared interrupts on A4, D11 and USER_BTN now available.");
-  #endif
+  #  if TEST_SHARED_EXTI
+       stlinkSerial.println("Shared interrupts on A0, A1 and D10 now available.");
+  #  else
+       stlinkSerial.println("Shared interrupts on A4, D11 and USER_BTN now available.");
+  #  endif
+  #elif defined(ARDUINO_SWAN_R5)
+  #  if TEST_SHARED_EXTI
+       stlinkSerial.println("Shared interrupts on A0, A1, A4 and A5 now available.");
+  #  else
+       stlinkSerial.println("Shared interrupts on A2, A3, D10 and D13 now available.");
+  #  endif
   #endif
 }
 

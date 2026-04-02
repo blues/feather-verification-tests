@@ -13,8 +13,8 @@
 
 #include <STM32LowPower.h>
 
-#define CX 1
-#if CX
+#define CX 0
+#if defined(ARDUINO_CYGNET) && CX
 #  include <Notecard.h>
 #endif
 
@@ -26,14 +26,14 @@ void ISR_user_btn (void) {
   user_btn = true;
 }
 
-#if CX
+#if defined(ARDUINO_CYGNET) && CX
 Notecard nc;
 #endif
 
 // the setup function runs once when you press reset or power the board
 void setup() {
 
-#if CX
+#if defined(ARDUINO_CYGNET) && CX
   // If Notecarrier-CX, then issue requests to
   // place the Notecard in a low-power state.
   nc.begin();
