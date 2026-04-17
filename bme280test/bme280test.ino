@@ -51,6 +51,16 @@ void setup() {
     Serial.begin(9600);
     while(!Serial);    // time to get serial running
     Serial.println(F("BME280 test"));
+    Serial.print(F("Transport: "));
+#if (TEST_I2C)
+    Serial.print(F("I2C"));
+#if (TEST_QWIIC_VCC)
+    Serial.print(F(" over Qwiic"));
+#endif
+    Serial.print(F("\n"));
+#else
+    Serial.println(F("SPI"));
+#endif
 
     unsigned status;
 
