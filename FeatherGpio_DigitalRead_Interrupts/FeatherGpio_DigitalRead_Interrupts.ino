@@ -102,14 +102,14 @@ void setup() {
   pinMode(D13, INPUT_PULLUP);
   pinMode(USER_BTN, INPUT);
 
-  // Attach Interrupts
+  // Attach Interrupts - Interrupts will only attach to whichever pin was configured last.
   attachInterrupt(digitalPinToInterrupt(A0),       ISR_a0,       RISING);
   attachInterrupt(digitalPinToInterrupt(A1),       ISR_a1,       RISING);
 #if not defined(ARDUINO_SWAN_R5) || not TEST_SHARED_EXTI
   attachInterrupt(digitalPinToInterrupt(A2),       ISR_a2,       RISING);
   attachInterrupt(digitalPinToInterrupt(A3),       ISR_a3,       RISING);
 #endif
-#if not defined(ARDUINO_CYGNET) || not TEST_SHARED_EXTI
+#if not (defined(ARDUINO_CYGNET) || defined(ARDUINO_HERON)) || not TEST_SHARED_EXTI
   attachInterrupt(digitalPinToInterrupt(A4),       ISR_a4,       RISING);
 #endif
   attachInterrupt(digitalPinToInterrupt(A5),       ISR_a5,       RISING);
@@ -119,14 +119,14 @@ void setup() {
 #if not defined(ARDUINO_SWAN_R5) || not TEST_SHARED_EXTI
   attachInterrupt(digitalPinToInterrupt(D10),      ISR_d10,      RISING);
 #endif
-#if not defined(ARDUINO_CYGNET) || not TEST_SHARED_EXTI
+#if not (defined(ARDUINO_CYGNET) || defined(ARDUINO_HERON)) || not TEST_SHARED_EXTI
   attachInterrupt(digitalPinToInterrupt(D11),      ISR_d11,      RISING);
 #endif
   attachInterrupt(digitalPinToInterrupt(D12),      ISR_d12,      RISING);
 #if not defined(ARDUINO_SWAN_R5) || not TEST_SHARED_EXTI
   attachInterrupt(digitalPinToInterrupt(D13),      ISR_d13,      RISING);
 #endif
-#if not defined(ARDUINO_CYGNET) || not TEST_SHARED_EXTI
+#if not (defined(ARDUINO_CYGNET) || defined(ARDUINO_HERON)) || not TEST_SHARED_EXTI
   attachInterrupt(digitalPinToInterrupt(USER_BTN), ISR_user_btn, RISING);
 #endif
 
@@ -147,7 +147,7 @@ void setup() {
   }
 
   stlinkSerial.println("Running Feather GPIO Digital Read Interrupt Test");
-  #ifdef ARDUINO_CYGNET
+  #if defined(ARDUINO_CYGNET) || defined(ARDUINO_HERON)
   #  if TEST_SHARED_EXTI
        stlinkSerial.println("Shared interrupts on A0, A1 and D10 now available.");
   #  else
@@ -159,6 +159,8 @@ void setup() {
   #  else
        stlinkSerial.println("Shared interrupts on A2, A3, D10 and D13 now available.");
   #  endif
+  #else
+       stlinkSerial.println("Testing Unknown Board");
   #endif
 }
 
@@ -166,8 +168,6 @@ void setup() {
 void loop() {
   // Check for pin A0 interrupt
   if (a0) {
-    // The interrupt (EXTI0) on A0 is shared with D11 on the Cygnet hardware.
-    // The interrupt will only attach to whichever pin was configured last.
     delay(100);
     a0 = false;
     stlinkSerial.println("A0: Interrupt");
@@ -175,8 +175,6 @@ void loop() {
 
   // Check for pin A1 interrupt
   if (a1) {
-    // The interrupt (EXTI1) on A1 is shared with A4 on the Cygnet hardware.
-    // The interrupt will only attach to whichever pin was configured last.
     delay(100);
     a1 = false;
     stlinkSerial.println("A1: Interrupt");
@@ -233,8 +231,6 @@ void loop() {
 
   // Check for pin D10 interrupt
   if (d10) {
-    // The interrupt (EXTI13) on D10 is shared with USER_BTN on the Cygnet hardware.
-    // The interrupt will only attach to whichever pin was configured last.
     delay(100);
     d10 = false;
     stlinkSerial.println("D10: Interrupt");

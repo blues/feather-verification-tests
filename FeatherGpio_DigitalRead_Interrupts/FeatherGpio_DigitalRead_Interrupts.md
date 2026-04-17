@@ -42,9 +42,9 @@ breadboard. You will see output for each pin that looks similar message from
 
 ### Shared Interrupts
 
-- The interrupt (EXTI0) on A0 is shared with D11 on the Cygnet hardware.
-- The interrupt (EXTI1) on A1 is shared with A4 on the Cygnet hardware.
-- The interrupt (EXTI13) on D10 is shared with USER_BTN on the Cygnet hardware.
+- The interrupt (EXTI0) on A0 is shared with D11 on the Cygnet or Heron hardware.
+- The interrupt (EXTI1) on A1 is shared with A4 on the Cygnet or Heron hardware.
+- The interrupt (EXTI13) on D10 is shared with USER_BTN on the Cygnet or Heron hardware.
 
 A message should print informing you which interrupts the sketch is currently testing.
 
