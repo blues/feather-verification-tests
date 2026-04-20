@@ -21,7 +21,7 @@ void setup() {
   pinMode(A3, INPUT);
   pinMode(A4, INPUT);
   pinMode(A5, INPUT);
-#if ARDUINO_SWAN_R5
+#if defined(ARDUINO_HERON) || defined(ARDUINO_SWAN_R5)
   pinMode(A6, INPUT);
   pinMode(A7, INPUT);
 #endif
@@ -49,17 +49,17 @@ void setup() {
 
 // the loop function runs over and over again forever
 void loop() {
-#if ARDUINO_CYGNET
+#if defined(ARDUINO_CYGNET)
   // _**WARNING:** The roll-over transition from 255 % 6 (3)
   // to 0 % 6 (0) causes an observable glitch in the pattern._
   uint16_t active_pin = (gpio_pin++ % 6);
-#elif ARDUINO_SWAN_R5
+#elif defined(ARDUINO_HERON) || defined(ARDUINO_SWAN_R5)
   // _**WARNING:** The roll-over transition from 255 % 8 (7)
   // to 0 % 8 (0) causes an observable glitch in the pattern._
   uint16_t active_pin = (gpio_pin++ % 8);
 #else
   uint16_t active_pin = 0;
-  stlinkSerial.println("Unknown board.");
+  stlinkSerial.println("Halting. Unknown board.");
   while(1);
 #endif
   if (!active_pin) {
@@ -95,7 +95,7 @@ void roll_gpio (uint16_t gpio_pin_) {
       stlinkSerial.print("A5: ");
       stlinkSerial.println(analogRead(A5));
       break;
-#if ARDUINO_SWAN_R5
+#if defined(ARDUINO_HERON) || defined(ARDUINO_SWAN_R5)
     case 0x0040:
       stlinkSerial.print("A6: ");
       stlinkSerial.println(analogRead(A6));
