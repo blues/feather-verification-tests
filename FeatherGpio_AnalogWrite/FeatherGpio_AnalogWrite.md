@@ -40,12 +40,6 @@ loops through the GPIO pins and glows each one (including the Onboard LED).
 > _**NOTE:** PWM on D6 is not possible on the Cygnet hardware.
 > No timer output AF available on PB9 for the STM32L433C._
 
-> _**NOTE:** PWM on D10 is disabled on the Cygnet in favor of A5.
-> Both PA7 (A5) and PB13 (D10) are routed to TIM1_CH1N,
-> Therefore, they cannot be driven independently; assigning
-> TIM1_CH1N to D10 means it will conflict with A5 whenever
-> both are used for PWM simultaneously._
-
 > _**NOTE:** PWM on D13 is not possible on the Cygnet hardware.
 > Only possible timer (TIM3_CH1) doesn't exist on the STM32L433C._
 

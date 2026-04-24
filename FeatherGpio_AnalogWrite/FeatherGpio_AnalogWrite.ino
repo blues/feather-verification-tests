@@ -56,6 +56,12 @@ void led_glow (uint8_t pin_) {
     delay(2);
   }
   analogWrite(pin_, 0);
+
+  // Release PWM, so timers can be shared between pins
+  pinMode(pin_, INPUT);
+
+  // Prevent pin from picking up noise from other PWM output
+  pinMode(pin_, OUTPUT);
 }
 
 void roll_gpio (uint16_t gpio_pin_) {
@@ -67,15 +73,23 @@ void roll_gpio (uint16_t gpio_pin_) {
       led_glow(A1);
       break;
     case 0x0004:
+      // PWM on A2 is not possible on the Swan hardware.
+      // No timer output AF available on PC3 for the STM32L4R5.
       led_glow(A2);
       break;
     case 0x0008:
+      // PWM on A3 is not possible on the Swan hardware.
+      // No timer output AF available on PC1 for the STM32L4R5.
       led_glow(A3);
       break;
     case 0x0010:
+      // PWM on A4 is not possible on the Swan hardware.
+      // No timer output AF available on PC4 for the STM32L4R5.
       led_glow(A4);
       break;
     case 0x0020:
+      // PWM on A5 is not possible on the Swan hardware.
+      // No timer output AF available on PC5 for the STM32L4R5.
       led_glow(A5);
       break;
     case 0x0040:
@@ -90,11 +104,6 @@ void roll_gpio (uint16_t gpio_pin_) {
       led_glow(D9);
       break;
     case 0x0200:
-      // PWM on D10 is disabled on the Cygnet in favor of A5.
-      // Both PA7 (A5) and PB13 (D10) are routed to TIM1_CH1N,
-      // Therefore, they cannot be driven independently; assigning
-      // TIM1_CH1N to D10 means it will conflict with A5 whenever
-      // both are used for PWM simultaneously.
       led_glow(D10);
       break;
     case 0x0400:
@@ -109,6 +118,8 @@ void roll_gpio (uint16_t gpio_pin_) {
       led_glow(D13);
       break;
     case 0x2000:
+      // PWM on LED_BUILTIN is not possible on the Swan hardware.
+      // No timer output AF available on PE2 for the STM32L4R5.
       led_glow(LED_BUILTIN);
       break;
   }
